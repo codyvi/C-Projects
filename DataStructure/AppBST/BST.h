@@ -15,6 +15,7 @@ class BST
         int height();
         int whatLevelamI(int data);
         void ancestors(int data);
+        int maxWidth();
         
     private:
         NodeT *root;
@@ -27,6 +28,7 @@ class BST
         void levelxlevel(NodeT *r);
         void free(NodeT *r);
         int getHeight(NodeT *r);
+        int getWidth(NodeT *r, int data);
 };
 
 BST::BST()
@@ -357,4 +359,40 @@ void BST::levelxlevel(NodeT *r)
         }
 
     }
+}
+
+int BST::getWidth(NodeT* r, int data)
+{
+    if(r == NULL)
+    {
+        return 0;
+    }
+
+    if(data == 1)
+    {
+        return 1;
+    }
+
+    else if(data > 1)
+    {
+       return getWidth(r->getLeft(), data -1) + getWidth(r->getRight(), data -1);
+    }
+}
+
+int BST::maxWidth()
+{
+    int maxW = 0;
+    int width;
+    int h = getHeight(root);
+
+    for(int i = 1 ; i <= h; i++)
+    {
+        width = getWidth(root, i);
+        if(width > maxW)
+        {
+            maxW = width;
+        }
+    }
+
+    return maxW;
 }
