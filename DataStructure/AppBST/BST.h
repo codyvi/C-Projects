@@ -16,7 +16,7 @@ class BST
         int whatLevelamI(int data);
         void ancestors(int data);
         int maxWidth();
-        
+        int count();
     private:
         NodeT *root;
         int howManyChildren(NodeT *r);
@@ -26,9 +26,11 @@ class BST
         void inOrder(NodeT *r);
         void postOrder(NodeT *r);
         void levelxlevel(NodeT *r);
+        void printLeaves(NodeT *r);
         void free(NodeT *r);
         int getHeight(NodeT *r);
         int getWidth(NodeT *r, int data);
+        int cuantos(NodeT *r);
 };
 
 BST::BST()
@@ -71,7 +73,8 @@ bool BST::search(int data)
 int BST::predecesor(NodeT *r){
     NodeT *aux = r->getLeft();
 
-    while(aux->getRight() != NULL){
+    while(aux->getRight() != NULL)
+    {
         aux = aux->getRight();
     }
     return aux->getData();
@@ -81,7 +84,8 @@ int BST::sucesor(NodeT *r)
 {
     NodeT *aux = r->getRight();
 
-    while(aux->getLeft() != NULL){
+    while(aux->getLeft() != NULL)
+    {
         aux = aux->getLeft();
     }
     return aux->getData();
@@ -238,7 +242,7 @@ void BST::print(int c)
             postOrder(root);
             break;
         case 4:
-            //Here goes print leafs
+            printLeaves(root);
             break;
         case 5: 
             levelxlevel(root);
@@ -289,12 +293,9 @@ int BST::whatLevelamI(int data)
             return nivel;
         }
 
-        else
-        {
-            curr = (curr->getData() > data) ?
+         curr = (curr->getData() > data) ?
                 curr->getLeft() : curr->getRight();
                 nivel++;
-        }
     }
 
     return -1;
@@ -303,32 +304,48 @@ int BST::whatLevelamI(int data)
 void BST::ancestors(int data)
 {
     NodeT *curr = root;
-    stack<NodeT *> nodeStack;
+    stack<int> nodeStack;
 
     while(curr != NULL)
     {
         if(curr->getData() == data)
         {
 
-            while(!nodeStack.empty())
+            if(nodeStack.empty())
             {
-                cout << nodeStack.top()->getData() << " ";
-                nodeStack.pop(); 
+                cout << "Este dato no tiene ancestros" << endl;
             }
-            cout << endl;
+            else
+            {
+                while(!nodeStack.empty())
+                {
+                    cout << nodeStack.top() << " ";
+                    nodeStack.pop();
+                }
+                cout << endl;
+            }
             return;
-        }
+    }
+    nodeStack.push(curr->getData());
+    curr = (curr->getData() > data) ?
+                curr->getLeft() : curr->getRight();
+    }
+    cout << "El dato no esta en el arbol" << endl;
+}
 
-        nodeStack.push(curr);
-
-        if(curr->getData() > data)
+void BST::printLeaves(NodeT *r)
+{
+    if(r != NULL)
+    {
+        if(r->getLeft() == NULL && r->getRight() == NULL)
         {
-            curr = curr->getLeft();
+            cout << r->getData() << " ";
         }
 
         else
         {
-            curr = curr->getRight();
+            printLeaves(r->getLeft());
+            printLeaves(r->getRight());
         }
     }
 }
@@ -395,4 +412,19 @@ int BST::maxWidth()
     }
 
     return maxW;
+}
+
+int BST::count()
+{
+    return cuantos(root);
+}
+
+int BST::cuantos(NodeT *r)
+{
+    if(r == NULL)
+    {
+        return 0;
+    }
+
+    return 1 + cuantos(r->getLeft()) + cuantos(r->getRight());
 }
