@@ -8,6 +8,7 @@ class BST
     public:
         BST();
         ~BST();
+        BST(const BST& treeB);
         void add(int data);
         bool search(int data);
         void remove(int data);
@@ -19,6 +20,7 @@ class BST
         int count();
         int nearstRelative(int num1, int num2);
         bool operator == (const BST& treeB);
+        void mirror();
     private:
         NodeT *root;
         int howManyChildren(NodeT *r);
@@ -34,11 +36,42 @@ class BST
         int getWidth(NodeT *r, int data);
         int cuantos(NodeT *r);
         bool compararA(NodeT *a, NodeT *b);
+        void copy(NodeT *a, NodeT *b);
+        void getMirror(NodeT *r);
 };
 
 BST::BST()
 {
     root = NULL;
+}
+
+void BST::copy(NodeT *a, NodeT *b)
+{
+    if(b->getLeft()!= NULL)
+    {
+        a->setLeft(new NodeT(b->getLeft()->getData()));
+        copy(a->getLeft(), b->getLeft());
+    }
+
+    if(b->getRight()!= NULL)
+    {
+        a->setRight(new NodeT(b->getRight()->getData()));
+        copy(a->getRight(), b->getRight());
+    }
+}
+
+BST::BST(const BST& treeB)
+{
+    if(treeB.root == NULL)
+    {
+        this->root == NULL;
+    }
+
+    else
+    {
+        root = new NodeT(treeB.root->getData());
+        copy(this->root, treeB.root);
+    }
 }
 
 BST::~BST()
@@ -474,7 +507,7 @@ int BST::nearstRelative(int a, int b)
             return padre;
         }
     }
-    
+
     return curr->getData();
 }
 
@@ -509,4 +542,21 @@ bool BST::compararA(NodeT *a, NodeT *b)
 bool BST::operator == (const BST& arbolB)
 {
     return compararA(this->root,arbolB.root);
+}
+
+void BST::getMirror(NodeT *r)
+{
+    if(r != NULL)
+    {
+        NodeT * temp = r->getLeft();
+        r->setLeft(r->getRight());
+        r->setRight(temp);
+        getMirror(r->getLeft());
+        getMirror(r->getRight());
+    }
+}
+
+void BST::mirror()
+{
+    getMirror(root);
 }
