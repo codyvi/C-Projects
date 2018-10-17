@@ -1,6 +1,5 @@
 #include <iostream>
-#include <stack>
-#include <queue>
+
 using namespace std;
 
 #include "BST.h"
@@ -29,6 +28,8 @@ int main()
     miArbol2.add(65);
     miArbol2.add(13);
 
+    BST miArbol3(miArbol);
+
     // cout<<"1"<<endl;
     // miArbol.print(1);
     // cout<<"2"<<endl;
@@ -40,13 +41,16 @@ int main()
     // cout<<"5"<<endl;
     // miArbol.print(5);
 
-    // if(miArbol.search(100)){
-    //  cout<<"Encontro"<<endl;
-    // } else{
-    //  cout <<" No encontro"<<endl;
-    // }
+    if(miArbol.search(140))
+    {
+     cout<<"Encontro el dato"<<endl;
+    } 
+    else
+    {
+        cout <<"No encontro el dato"<<endl;
+    }
 
-    cout<<endl<<miArbol.count()<<endl;
+    cout<<miArbol.count()<<endl;
 
     cout<<miArbol.height()<<endl;
     cout<<"Los ancestros de 50 son: ";
@@ -74,6 +78,26 @@ int main()
     {
         cout << "Mis arboles no son iguales" << endl;
     }
+
+    //Checks if the copy const works
+
+    if(miArbol == miArbol3)
+    {
+        cout << "Los arboles son iguales" << endl;
+    }
+
+    else
+    {
+        cout << "Mis arboles no son iguales" << endl;
+    }
+
+
+
+    miArbol.print(5);
+    cout <<"Mirror: ";
+    miArbol.mirror();
+    miArbol.print(5);
+
 
     return 0;
 }
