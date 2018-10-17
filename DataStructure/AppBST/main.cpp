@@ -65,7 +65,7 @@ int main()
     cout<<"El nivel del dato 12 es: "<<miArbol.whatLevelamI(12)<<endl;
 
 
-    cout<< "El pariente más cercano de 13 y 65 es: " <<miArbol.nearstRelative(13,65)<<endl;
+    cout<< "El pariente más cercano de 13 y 65 es: " <<miArbol.nearestRelative(13,65)<<endl;
 
     cout<<miArbol.maxWidth()<<endl;
 
@@ -93,10 +93,10 @@ int main()
 
 
 
-    miArbol.print(5);
+    miArbol.print(2);
     cout <<"Mirror: ";
     miArbol.mirror();
-    miArbol.print(5);
+    miArbol.print(2);
 
 
     return 0;

@@ -18,7 +18,7 @@ class BST
         void ancestors(int data);
         int maxWidth();
         int count();
-        int nearstRelative(int num1, int num2);
+        int nearestRelative(int num1, int num2);
         bool operator == (const BST& treeB);
         void mirror();
     private:
@@ -465,7 +465,7 @@ int BST::cuantos(NodeT *r)
     return 1 + cuantos(r->getLeft()) + cuantos(r->getRight());
 }
 
-int BST::nearstRelative(int a, int b)
+int BST::nearestRelative(int a, int b)
 {
     int mayor = (a>b) ? a : b;
     int menor = (a<b) ? a : b;
