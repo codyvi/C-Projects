@@ -17,6 +17,8 @@ class BST
         void ancestors(int data);
         int maxWidth();
         int count();
+        int nearstRelative(int num1, int num2);
+        bool operator == (const BST& treeB);
     private:
         NodeT *root;
         int howManyChildren(NodeT *r);
@@ -31,6 +33,7 @@ class BST
         int getHeight(NodeT *r);
         int getWidth(NodeT *r, int data);
         int cuantos(NodeT *r);
+        bool compararA(NodeT *a, NodeT *b);
 };
 
 BST::BST()
@@ -427,4 +430,83 @@ int BST::cuantos(NodeT *r)
     }
 
     return 1 + cuantos(r->getLeft()) + cuantos(r->getRight());
+}
+
+int BST::nearstRelative(int a, int b)
+{
+    int mayor = (a>b) ? a : b;
+    int menor = (a<b) ? a : b;
+    int padre;
+
+    if(root->getData() == mayor || root->getData() == menor)
+    {
+        cout << "No hay relativo más cercano" << endl;
+        return -1;
+    }
+
+    NodeT *curr = root;
+    
+    if(menor > root->getData())
+    {
+        curr = root->getRight();
+    }
+
+    else if(mayor < root->getData())
+    {
+        curr = root->getLeft();
+    }
+
+    while(!(menor < curr->getData() && mayor > curr->getData()))
+    {    
+        padre = curr->getData();
+        if(menor > curr->getData())
+        {
+            curr = curr->getRight();
+        }
+
+        if(mayor < curr->getData())
+        {
+            curr = curr->getLeft();
+        }
+
+        if(menor == curr->getData() || mayor == curr->getData())
+        {
+            return padre;
+        }
+    }
+    
+    return curr->getData();
+}
+
+bool BST::compararA(NodeT *a, NodeT *b)
+{
+    if(a==NULL && b==NULL)
+    {
+        true;
+    } 
+
+    else if(a!=NULL && b!= NULL)
+    {
+        //cout<< a->getData() << " - " << b->getData() <<endl;
+       
+        if(a->getData() != b->getData())
+        {
+            return false;
+        } 
+        
+        else 
+        {
+            return compararA(a->getLeft(),b->getLeft()) && compararA(a->getRight(),b->getRight());
+        }
+    }
+
+    else
+    {
+        return false;
+    }
+}
+
+bool BST::operator == (const BST& arbolB)
+{
+    return compararA(this->root,arbolB.root);
 }
