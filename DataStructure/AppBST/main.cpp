@@ -1,11 +1,13 @@
 #include <iostream>
+#include <stack>
+#include <queue>
 using namespace std;
+
 #include "BST.h"
 
 int main()
 {
-
-    BST miArbol;
+    BST miArbol,miArbol2, A, B;
 
     miArbol.add(12);
     miArbol.add(100);
@@ -16,40 +18,62 @@ int main()
     miArbol.add(-5);
     miArbol.add(65);
     miArbol.add(13);
-    //miArbol.add(200);
-    miArbol.print(1);
-    miArbol.print(2);
-    miArbol.print(3);
+    
+    miArbol2.add(12);
+    miArbol2.add(100);
+    miArbol2.add(45);
+    miArbol2.add(50);
+    miArbol2.add(8);
+    miArbol2.add(10);
+    miArbol2.add(-5);
+    miArbol2.add(65);
+    miArbol2.add(13);
+
+    // cout<<"1"<<endl;
+    // miArbol.print(1);
+    // cout<<"2"<<endl;
+    // miArbol.print(2);
+    // cout<<"3"<<endl;
+    // miArbol.print(3);
+    // cout<<"4"<<endl;
+    // miArbol.print(4);
+    // cout<<"5"<<endl;
+    // miArbol.print(5);
+
+    // if(miArbol.search(100)){
+    //  cout<<"Encontro"<<endl;
+    // } else{
+    //  cout <<" No encontro"<<endl;
+    // }
+
+    cout<<endl<<miArbol.count()<<endl;
+
+    cout<<miArbol.height()<<endl;
+    cout<<"Los ancestros de 50 son: ";
+    miArbol.ancestors(50);
+    cout<<"Los ancestros de 12 son: ";
+    miArbol.ancestors(12);
+    cout<<"Los ancestros de 102 son: ";
+    miArbol.ancestors(102);
+
+    cout<<"El nivel del dato 50 es: "<<miArbol.whatLevelamI(50)<<endl;
+    cout<<"El nivel del dato 102 es: "<<miArbol.whatLevelamI(102)<<endl;
+    cout<<"El nivel del dato 12 es: "<<miArbol.whatLevelamI(12)<<endl;
 
 
-    if(miArbol.search(100))
+    cout<< "El pariente más cercano de 13 y 65 es: " <<miArbol.nearstRelative(13,65)<<endl;
+
+    cout<<miArbol.maxWidth()<<endl;
+
+    if(miArbol == miArbol2)
     {
-        cout << "Encontre el 100" << endl;
+        cout << "Los arboles son iguales" << endl;
     }
-    if(miArbol.search(200))
-    {
-        cout << "Encontre el 200" << endl;
-    }
+
     else
     {
-        cout << "No encontre el 200" << endl;
+        cout << "Mis arboles no son iguales" << endl;
     }
-
-    miArbol.remove(12);
-    miArbol.print(1);
-    miArbol.print(2);
-    miArbol.print(3);
-
-
-    cout << "La altura de mi arbol es: " << miArbol.height() << endl;
-
-    cout << "El nivel del 65 es: " << miArbol.whatLevelamI(65) << endl;
-
-    cout << "Los ancestros de -5 son: "; 
-    miArbol.ancestors(-5);
-
-    cout << "Level Order: ";
-    miArbol.print(5);
 
     return 0;
 }
