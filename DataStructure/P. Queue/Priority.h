@@ -1,3 +1,7 @@
+#pragma once
+
+#include <vector>
+
 #include "Node.h"
 
 template <class T>
@@ -10,10 +14,22 @@ class Priority
 		T top();
 		void push(T data);
 		void pop();
-		int size();
+		int size(); //Done
 		bool empty();
 
 	private:
 		Node<T> *final;
 		int tam;
+}
+
+template <class T>
+int Priority<T>::size()
+{
+	return tam;
+}
+
+template <class T>
+bool Priority<T>::empty()
+{
+	return final == NULL;
 }
