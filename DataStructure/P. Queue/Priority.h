@@ -13,7 +13,6 @@ class Priority
 		int top(); //DONE 
 		int size(); //DONE
 		bool empty(); //DONE
-		void print(); //Used to see if it's working
 
 	private:
 		std::vector<int> TheHeap;
@@ -36,48 +35,59 @@ Priority::Priority(bool p)
 void Priority::push(int data)
 {
 	TheHeap.push_back(data);
-	int counter = TheHeap.size() - 1;
-	while(counter/2>=0 && compara(TheHeap[counter], TheHeap[counter/2]))
-	{
-		cambiar(TheHeap[counter], TheHeap[counter/2]);
-		counter/=2;
-	}
+	int counter = TheHeap.size()-1;
+    while(counter/2 >= 0 && compara(TheHeap[counter],TheHeap[counter/2]))
+    {
+        cambiar(TheHeap[counter], TheHeap[counter/2]);
+        counter /= 2;
+    }
+
 }
 
-void Priority::pop(){
-	cambiar(TheHeap[0], TheHeap[TheHeap.size()-1]);
-	TheHeap.erase(TheHeap.end()-1);
+void Priority::pop()
+{
+	cambiar(TheHeap.front(), TheHeap.back());
+    TheHeap.erase(TheHeap.end()-1);
+    
+    if(!TheHeap.empty())
+    {
+    	int i = 0;
+        int izq = 2*i + 1;
+        int der = 2*i + 2;
+        int hP;
 
-	
-	for(int i=0;i<(TheHeap.size()-1)/2;++i)
-	{
-		if(compara(TheHeap[(i+1)*2-1],TheHeap[(i+1)*2]))
-		{
-			if(!compara(TheHeap[i], TheHeap[(i+1)*2-1]))
-			{
-				cambiar(TheHeap[i],TheHeap[(i+1)*2-1]);
-			}
+        while(izq < TheHeap.size() -1)
+        {
+       
+            hP = compara(TheHeap[izq], TheHeap[i]) ? izq : i; 
 
-		} 
+            if(der <= TheHeap.size() - 1 && compara(TheHeap[der], TheHeap[hP]))
+            {
+                hP = der;
+            }
+    
+            if(hP != i)
+            {
+                cambiar(TheHeap[i], TheHeap[hP]);
+                i = hP;
+            }
 
-		else 
-		{
-			if(!compara(TheHeap[i], TheHeap[(i+1)*2]))
-			{
-				cambiar(TheHeap[i],TheHeap[(i+1)*2]);
-			}
-		}
-	}
+            else
+            {
+                break;
+            }
+        
+            izq = 2*i + 1;
+            der = 2*i + 2;
+        }
+
+    }   
+
 }
 
 int Priority::top()
 {
-	if(TheHeap.size() != 0)
-	{
-		return TheHeap[0];
-	}
-
-	return -1;
+	return TheHeap.front();
 }
 
 int Priority::size()
@@ -87,18 +97,8 @@ int Priority::size()
 
 bool Priority::empty()
 {
-	return TheHeap.size() == 0;
+	return TheHeap.empty();
 }
-
-void Priority::print()
-{
-	for(int i=0;i < TheHeap.size();++i)
-	{
-		cout << TheHeap[i] << " ";
-	}
-	cout<<endl;
-}
-
 
 bool Priority::compara(int a, int b)
 {
