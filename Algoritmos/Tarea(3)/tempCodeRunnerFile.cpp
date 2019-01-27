@@ -1,0 +1,1 @@
+   //b[2][k] = sumatoria -1;
