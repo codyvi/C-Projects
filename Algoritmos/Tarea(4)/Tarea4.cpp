@@ -50,5 +50,7 @@ int main()
 
    cout << "La suma de los numeros impares del arreglo es: " << Suma << endl;
    cout << "La suma de todos los numeros impares del arreglo (recuriva) es: "<< algo(iArr, n) << endl;
+    
+   return 0;
 
 }
