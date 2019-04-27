@@ -2,13 +2,6 @@
 
 using namespace std;
 
-void resetSoldiers(int act[], int toR[], int iSoldiers)
-{
-     for(int i = 0; i < iSoldiers; i++) 
-     {
-           act[i] = toR[i];
-     }
-}
 
 int ball(int bPower, int act[], int toR[], int iSoldiers, int &SoldiersParados)
 {
@@ -41,13 +34,16 @@ int ball(int bPower, int act[], int toR[], int iSoldiers, int &SoldiersParados)
 
     if(act[iSoldiers - 1] == 0)
     {
-        resetSoldiers(act, toR, iSoldiers);
+        for(int i = 0; i < iSoldiers; i++) 
+        {
+           act[i] = toR[i];
+        }
+
         SoldiersParados = iSoldiers;
         iCounter = 0;
     }
     SoldiersParados -= iCounter;
     return SoldiersParados; 
-    
 }
 
 int main()
@@ -59,7 +55,6 @@ int main()
 
     int arrSoldiers[iSoldiers]; 
     int arrGolpes[iQ];
-    int iarrRes[50];
     int iarrAux[50];
 
     for(int i = 0; i < iSoldiers; i++)
@@ -74,17 +69,16 @@ int main()
         arrGolpes[i] = iTmp;
     }
     
-    resetSoldiers(iarrAux, arrSoldiers, iSoldiers);
-
-    int SoldadosParados = iSoldiers;
-    for(int i = 0; i < iQ; i++)
+    for(int i = 0; i < iSoldiers; i++) 
     {
-        iarrRes[i] = ball(arrGolpes[i], iarrAux, arrSoldiers, iSoldiers, SoldadosParados);
+        iarrAux[i] = arrSoldiers[i];
     }
 
+    int SoldadosParados = iSoldiers;
+   
     for(int i = 0; i < iQ; i++)
     {
-        cout << iarrRes[i] << " " << endl;
+        cout << ball(arrGolpes[i], iarrAux, arrSoldiers, iSoldiers, SoldadosParados) << endl;
     }
 
     return 0; 
